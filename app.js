@@ -1,11 +1,11 @@
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext("2d");
 
-//we will need the gamecontainer to make it blurry when we display the end menu
-const gamecontainer = document.getEelementById('game-container');
+// we will need the gamecontainer to make it blurry when we display the end menu
+const gameContainer = document.getElementById('game-container');
 
 const flappyImg = new Image();
-flappyImg.src = './image/flappy_dunk.png';
+flappyImg.src = 'image/flappy_dunk.png';
 
 //game constants
 const FLAP_SPEED = -5;
@@ -14,20 +14,20 @@ const BIRD_HEIGHT = 30;
 const PIPE_WIDTH = 50;
 const PIPE_GAP = 125;
 
-//bird variables
+// Bird variables
 let birdX = 50;
 let birdY = 50;
 let birdVelocity = 0;
-let birdAcceletarion = 0.1;
+let birdAcceleration = 0.1;
 
 //pipe variables
 let pipeX = 400;
-let pipeY = canvas.height -200;
+let pipeY = canvas.height - 200;
 
 //score and highscore variables
 let scoreDiv = document.getElementById('score-display');
 let score = 0;
-let highscore = 0;
+let highScore = 0;
 
 // we add a bool variable, so we can check when flappy passes we increase
 // the value
@@ -110,13 +110,12 @@ function collisionCheck(){
 }
 function hideEndMenu(){
     document.getElementById('end-menu').style.display='none';
-    gamecontainer.classList.remove('backdrop-blur');
+    gameContainer.classList.remove('backdrop-blur');
 }
 function showEndMenu(){
     document.getElementById('end-menu').style.display='block';
-    gamecontainer.classList.add('backdrop-blur');
+    gameContainer.classList.add('backdrop-blur');
     document.getElementById('end-score').innerHTML = score;
-
     // This way we update always our highscore at the end of our game
     // if we have a higher high score than the previous
     if (highScore < score) {
@@ -124,7 +123,8 @@ function showEndMenu(){
     }
     document.getElementById('best-score').innerHTML = highScore;
 }
-
+// we reset the values to the beginning so we start 
+// with the bird at the beginning
 function resetGame(){
     birdX = 50;
     birdY = 50;
@@ -142,6 +142,7 @@ function endGame(){
 function loop(){
     // reset the ctx after every loop iteration
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     // Draw Flappy Bird
     ctx.drawImage(flappyImg, birdX, birdY);
 
@@ -158,7 +159,6 @@ function loop(){
         endGame();
         return;
     }
-
     // forgot to mvoe the pipes
     pipeX -= 1.5;
     // if the pipe moves out of the frame we need to reset the pipe
@@ -169,7 +169,7 @@ function loop(){
     // apply gravity to the bird and let it move
     birdVelocity += birdAcceleration;
     birdY += birdVelocity;
-     // always check if you call the function ...
+    // always check if you call the function ...
     increaseScore()
     requestAnimationFrame(loop);
 }
